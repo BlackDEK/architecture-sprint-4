@@ -23,58 +23,42 @@ USE. Данный подход позволит увидеть нагрузку 
 
 ## Метрики
 
-- Message Queue
-  - Number of dead-letter-exchange letters in RabbitMQ
-    - Зачем:
-    - Ярлыки:
-  - Number of message in flight in RabbitMQ
-    - Зачем:
-    - Ярлыки:
-- Shop API
-  - Response time (latency) for shop API
-    - Зачем:
-    - Ярлыки:
-  - Number of simultanious sessions for shop API
-    - Зачем:
-    - Ярлыки:
-  - Number of HTTP 200 for shop API
-    - Зачем:
-    - Ярлыки:
-  - Number of HTTP 500 for shop API
-    - Зачем:
-    - Ярлыки:
-- MES API
-  - Response time (latency) for MES API
-    - Зачем:
-    - Ярлыки:
-  - Number of simultanious sessions for MES API
-    - Зачем:
-    - Ярлыки:
-  - Number of HTTP 200 for MES API
-    - Зачем:
-    - Ярлыки:
-  - Number of HTTP 500 for MES API
-    - Зачем:
-    - Ярлыки:
-- Shop DB
-  - Number of connections for shop db instance
-    - Зачем:
-    - Ярлыки:
-- MES DB
-  - Number of connections for MES db instance
-    - Зачем:
-    - Ярлыки:
-- CRM API
-  - CPU % for CRM API
-    - Зачем:
-    - Ярлыки:
-  - Memory Utilisation for CRM API
-    - Зачем:
-    - Ярлыки:
+- Number of dead-letter-exchange letters
+  - Для кого: Message Queue.
+  - Зачем: показывает количество недоставленных сообщений. Указывает на проблему в очереди.  (Частота запросов)
+  - Ярлыки: queue_id, startpoint, endpoint, error_id
+- Number of message in flight
+  - Для кого: Message Queue.
+  - Зачем: показывает общее кол-во сообщений, демонстрирует нагрузку на системы. (Насыщенность)
+  - Ярлыки: queue_id, startpoint, endpoint
+- Response time (latency)
+  - Для кого: Shop API, MES API.
+  - Зачем: Позволяет измерять время отклика API. (Задержка)
+  - Ярлыки: endpoint.
+- Number of HTTP 200
+  - Для кого: Shop API, MES API.
+  - Зачем: Показывает трафик приложения. (Трафик)
+  - Ярлыки: endpoint.
+- Number of HTTP 500
+  - Для кого: Shop API, MES API.
+  - Зачем: Показывает частоту ошибок. (Ошибки)
+  - Ярлыки: endpoint, error_id.
+- CPU %
+  - Для кого: CRM API.
+  - Зачем: Показывает нагрузку которое создает приложение для расчета модели. (Утилизация)
+  - Ярлыки: container_id
+- Memory Utilization
+  - Для кого: CRM API.
+  - Зачем: Показывает нагрузку которое создает приложение для расчета модели. (Утилизация)
+  - Ярлыки: container_id
+- Size queue (нету в базовом списке)
+  - Для кого: CRM API.
+  - Зачем: Показывает то сколько еще моделей надо обработать. (Насыщенность)
+  - Ярлыки: container_id
 
 ## План действий
 
-1. Согласовать метрики с ключевыми заинтересованными сторонами.
+1. Согласовать метрики с аналитиками и бизнесом.
 2. Выбрать инструменты для мониторинга.
 3. Доработать существующий код приложений, чтобы можно было запросить метрики.
 4. Развернуть инструмент агрегации метрик.
