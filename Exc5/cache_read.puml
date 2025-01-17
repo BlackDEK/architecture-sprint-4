@@ -1,0 +1,11 @@
+@startuml
+Operator -> Mes: Get orders list
+Mes -> MesCache: Get orders list
+opt Orders are not in cache
+MesCache -> MesDB: Get part of orders list
+return Return part of orders list
+MesCache -> MesCache: Save is not cached orders
+end
+MesCache -> Mes: Return orders list
+Mes -> Operator: Return orders list
+@enduml

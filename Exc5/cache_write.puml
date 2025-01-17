@@ -1,0 +1,14 @@
+@startuml
+Operator -> Mes: Update order
+Mes -> MesCache: Update order
+MesCache -> MesCache: Save new order
+alt Save new order is success
+MesCache -> MesDB: Save new order
+return Success
+else Save new order is failed
+MesCache -> MesDB: Save new order
+return Error code
+end
+MesCache -> Mes: Return status operation
+Mes -> Operator: Return status operation
+@enduml
